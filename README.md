@@ -16,3 +16,7 @@ and on the UGent (Biostat department) server
 
 Need `msWaldHMP` to work, which can be found 
 [at this link](https://github.com/mafed/msWaldHMP)
+
+## Daily Logs
+### 04/16/2018
+* Added Chris to the project's authors' list
