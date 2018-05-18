@@ -98,6 +98,7 @@ shinyUI(fluidPage(theme = shinytheme("spacelab"),
                             multiple = FALSE), 
                         actionButton("reset", label = "Remove File"),
                         helpText("Ignore uploaded file (only once).")
+                
                     ),
                     #column(6, align = "left",
                     #), 
@@ -238,7 +239,8 @@ shinyUI(fluidPage(theme = shinytheme("spacelab"),
                             "another one, look at the loading bar at the top of the page."))
                     ), 
                     column(width = 3, 
-                        downloadButton("downloadReport", label = "Download") 
+                        downloadButton("downloadReport", label = "Download"),
+                        radioButtons('format', 'Document format', c('HTML', 'Word', 'PDF'))
                     ),
                     column(width = 12, hr())
                 ),# END - fluidRow

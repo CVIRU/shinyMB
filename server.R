@@ -183,7 +183,6 @@ shinyServer(
               ## set first column as rownames then remove it, first column must 
               ## contain observations IDs
               inFile <- input$userFiles
-              
               inData <- read.table(inFile$datapath[1L], header = TRUE, row.names = 1,
                   sep = input$sep, quote = input$quote, check.names = FALSE)
               inData <- t(as.matrix(inData))
@@ -237,18 +236,17 @@ shinyServer(
                   piVec[[stratumRun]] <- msWaldHMP:::piMoM4Wald(aux)
                   theta[[stratumRun]] <- msWaldHMP:::weirMoM4Wald(aux)
                   nReadsFromData[[stratumRun]] <- list(
-                      nReadsTmp[strata == stratumRun], 
-                      nReadsTmp[strata == stratumRun])
+                    nReadsTmp[strata == stratumRun], 
+                    nReadsTmp[strata == stratumRun])
                 }
                 
               }# END - ifelse: enterotype stratification
             }# END - ifelse: userFiles or generated data
             
-#            piOne <- 
+#           piOne <-
             list("piOne" = piVec, "theta" = theta, "simulatedPiOne" = simulatedPiOne,
-                "nReadsFromData" = nReadsFromData, "maxNumOTU" = maxNumOTU)
+                 "nReadsFromData" = nReadsFromData, "maxNumOTU" = maxNumOTU)
           })
-      
       
       ### rest of the code
 #      changedOTUs <- function() 1L:4
@@ -1279,7 +1277,12 @@ shinyServer(
             aux <- format(Sys.time(), "%Y-%m-%d_%X")
             for (i in 1L:3)
               aux <- sub(pattern = ":", replacement = ".", x = aux, fixed = TRUE)
-            paste0('ReportMB_', aux, '.pdf')
+            extension = switch(input$format,
+                               PDF = '.pdf', 
+                               HTML = '.html', 
+                               Word = '.docx'
+            )
+            paste0('ReportMB_', aux, extension)
           },
           
           content = function(file) {
@@ -1292,7 +1295,12 @@ shinyServer(
             file.copy(src, 'template.Rmd')
             
 #            require(rmarkdown)
-            out <- render('template.Rmd', pdf_document(highlight = "haddock"))
+            out <- render(input = 'template.Rmd', 
+                          output_format = switch(input$format,
+                                                 PDF = pdf_document(), 
+                                                 HTML = html_document(), 
+                                                 Word = word_document()
+                          ))
 #             out <- render('template.Rmd', NULL)
             file.rename(out, file)
           }

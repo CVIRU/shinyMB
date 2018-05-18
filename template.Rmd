@@ -4,7 +4,9 @@ title: "Sample Size Determination for Case-Control Microbiome Studies with Shiny
 author: "Federico Mattiello"
 date: '`r format(Sys.time(), "%d/%m/%Y - %X")`'
 output:
-  html_document:
+  pdf_document
+  html_document
+  word_document
 highlight: haddock
 toc: no
 ---
